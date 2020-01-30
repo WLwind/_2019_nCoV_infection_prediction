@@ -11,6 +11,6 @@ list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 find_package( Ceres REQUIRED )
 include_directories(include ${CERES_INCLUDE_DIRS})
 
-add_executable(_2019_nCoV_infection_prediction main.cpp )
+add_executable(_2019_nCoV_infection_prediction src/main.cpp )
 # link Ceres lib
 target_link_libraries(_2019_nCoV_infection_prediction ${CERES_LIBRARIES})
