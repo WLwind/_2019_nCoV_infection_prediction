@@ -1,3 +1,4 @@
+#pragma once
 #include <ceres/ceres.h>
 // cost fuction
 struct CURVE_FITTING_COST
