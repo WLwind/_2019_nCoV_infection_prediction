@@ -53,12 +53,12 @@ int main ( int argc, char* argv[] )
     cout<<summary.BriefReport() <<endl;
     std::cout<<"estimated formular: y="<<"e^("<<ka[0]<<"(x+"<<ka[1]<<"))"<<std::endl;
     time_t now_seconds{std::time(0)};
-//    std::tm first_date{0,0,0,17,0,2020-1900,5,16,0};//2020.1.17
-//    now_seconds=mktime(&first_date);
-//    now_seconds+=(days-1)*86400;
+    std::tm first_date{0,0,0,17,0,2020-1900,5,16,0};//2020.1.17
+    now_seconds=mktime(&first_date);
+    now_seconds+=(days-1)*86400;//last data collected day
     std::tm* now_time=std::localtime(&now_seconds);
-    std::cout<<"Today is "<<1900+now_time->tm_year<<"."<<1+now_time->tm_mon<<"."<<now_time->tm_mday<<std::endl;
-    std::cout<<"The predicted number of infected persons in comming 3 days are: "<<std::endl;
+    std::cout<<"The last data collected is on "<<1900+now_time->tm_year<<"."<<1+now_time->tm_mon<<"."<<now_time->tm_mday<<std::endl;
+    std::cout<<"The predicted number of infected persons in next 3 days are: "<<std::endl;
     for(int i=0;i<3;i++)
     {
         now_seconds+=86400;
