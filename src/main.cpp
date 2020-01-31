@@ -9,7 +9,7 @@ using namespace std;
 
 int main ( int argc, char* argv[] )
 {
-    double ka[2] = {0.3,14.0};//parameters
+    double nig[3] = {100000.0,58.0,0.02123106};//parameters
     vector<double> y_data;
     double load_data;
     std::ifstream ifs("../infected_numbers.txt");
@@ -32,11 +32,11 @@ int main ( int argc, char* argv[] )
     for(int i=0;i<days;i++)
     {
         problem.AddResidualBlock(//add errors
-            new ceres::AutoDiffCostFunction<CURVE_FITTING_COST,1,2>(
+            new ceres::AutoDiffCostFunction<CURVE_FITTING_COST,1,3>(
                 new CURVE_FITTING_COST(x_data[i],y_data[i])
             ),
             nullptr,//kernal function
-            ka//parameters
+            nig//parameters
         );
     }
 
@@ -51,7 +51,7 @@ int main ( int argc, char* argv[] )
     chrono::duration<double> time_used = chrono::duration_cast<chrono::duration<double>>( t2-t1 );
     cout<<"solve time cost = "<<time_used.count()<<" seconds. "<<endl;
     cout<<summary.BriefReport() <<endl;
-    std::cout<<"estimated formular: y="<<"e^("<<ka[0]<<"(x+"<<ka[1]<<"))"<<std::endl;
+    std::cout<<"estimated formular: y="<<nig[0]<<"*"<<nig[1]<<"/("<<nig[1]<<"+("<<nig[0]<<"-"<<nig[1]<<")e^(-"<<nig[2]<<"x))"<<std::endl;
     time_t now_seconds{std::time(0)};
     std::tm first_date{0,0,0,17,0,2020-1900,5,16,0};//2020.1.17
     now_seconds=mktime(&first_date);
@@ -63,7 +63,7 @@ int main ( int argc, char* argv[] )
     {
         now_seconds+=86400;
         now_time=std::localtime(&now_seconds);
-        std::cout<<1900+now_time->tm_year<<"."<<1+now_time->tm_mon<<"."<<now_time->tm_mday<<": "<<int(exp(ka[0]*(days+i+ka[1]))+0.5)<<std::endl;
+        std::cout<<1900+now_time->tm_year<<"."<<1+now_time->tm_mon<<"."<<now_time->tm_mday<<": "<<int(nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*exp(-nig[2]*(days+i)))+0.5)<<std::endl;
     }
     return 0;
 }
