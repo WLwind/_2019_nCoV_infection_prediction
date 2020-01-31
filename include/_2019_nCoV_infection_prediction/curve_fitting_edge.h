@@ -11,8 +11,8 @@ public:
     void computeError()
     {
         const CurveFittingVertex* v = static_cast<const CurveFittingVertex*>(_vertices[0]);
-        const Eigen::Vector2d ka = v->estimate();
-        _error[0]= _measurement - std::exp(ka[0]*(_x+ka[1]));// y-exp(k(x+a))
+        const Eigen::Vector3d nig = v->estimate();
+        _error[0]= _measurement - nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*std::exp(-nig[2]*_x));//y-N*I0/(I0+(N-I0)e^(-γβx))
     }
     virtual bool read( std::istream& in ) {}
     virtual bool write( std::ostream& out ) const {}
