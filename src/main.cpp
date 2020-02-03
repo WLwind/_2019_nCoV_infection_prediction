@@ -9,7 +9,7 @@ using namespace std;
 
 int main ( int argc, char* argv[] )
 {
-    double nig[3] = {100000.0,58.0,0.02123106};//parameters
+    double nig[3] = {50000.0,58.0,0.02123106};//parameters
     vector<double> y_data;
     double load_data;
     std::ifstream ifs("../infected_numbers.txt");
@@ -52,6 +52,7 @@ int main ( int argc, char* argv[] )
     cout<<"solve time cost = "<<time_used.count()<<" seconds. "<<endl;
     cout<<summary.BriefReport() <<endl;
     std::cout<<"estimated formular: y="<<nig[0]<<"*"<<nig[1]<<"/("<<nig[1]<<"+("<<nig[0]<<"-"<<nig[1]<<")e^(-"<<nig[2]<<"x))"<<std::endl;
+    std::cout<<"The estimated peak number is "<<int(nig[0])<<", which is "<<nig[0]/5237.0<<" times the number of SARS."<<std::endl;
     time_t now_seconds{std::time(0)};
     std::tm first_date{0,0,0,17,0,2020-1900,5,16,0};//2020.1.17
     now_seconds=mktime(&first_date);
