@@ -58,6 +58,10 @@ int main ( int argc, char* argv[] )
     now_seconds=mktime(&first_date);
     now_seconds+=(days-1)*86400;//last data collected day
     std::tm* now_time=std::localtime(&now_seconds);
+    int approaching_day=0;
+    for(int i=0;nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*exp(-nig[2]*(days+i)))<0.99*nig[0];i++)//99% of the peak number
+        approaching_day=i-1;
+    std::cout<<"The infected number will approach the peak after about "<<approaching_day<<" days."<<std::endl;
     std::cout<<"The last data collected is on "<<1900+now_time->tm_year<<"."<<1+now_time->tm_mon<<"."<<now_time->tm_mday<<std::endl;
     std::cout<<"The predicted number of infected persons in next 3 days are: "<<std::endl;
     for(int i=0;i<3;i++)
