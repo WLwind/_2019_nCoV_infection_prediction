@@ -3,7 +3,9 @@ This is a cmake project to predict the number of infected persons by 2019-nConV 
 I'm trying to use Susceptible-Infective Model to predict the number. This branch estimates the parameters of the formular using [Ceres Solver](http://www.ceres-solver.org/) with the data from [Medsci.cn](http://m.medsci.cn/wh.asp).  
 **This is not a rigorous method to predict the number of infected persons, so don't take it seriously.**
 ## Dependencies
-Ceres Solver
+Ceres Solver  
+For Ubuntu users, you can simply install it from apt:  
+$ sudo apt install libceres-dev
 ## Installation
 $ cd _2019_nConV_infection_prediction  
 $ mkdir build  
