@@ -8,6 +8,7 @@ For Ubuntu users, you can simply install it from apt:
 $ sudo apt install libceres-dev
 ## Installation
 $ cd _2019_nConV_infection_prediction  
+$ git checkout ceres  
 $ mkdir build  
 $ cd build  
 $ cmake ..  
