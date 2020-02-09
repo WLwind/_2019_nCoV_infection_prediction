@@ -11,7 +11,8 @@ list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 find_package( G2O REQUIRED )
 include_directories(
     include
-    ${G2O_INCLUDE_DIRS}
+    ${G2O_INCLUDE_DIR}
+    ${G2O_INCLUDE_DIR}/..
     "/usr/include/eigen3"
 )
 
