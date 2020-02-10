@@ -80,7 +80,7 @@ int main( int argc, char** argv )
     approaching_seconds+=(days+approaching_days)*86400;
     now_seconds+=(days-1)*86400;//last data collected day
     std::tm* time_ptr=std::localtime(&now_seconds);
-    std::cout<<"The last data collected is on "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
+    std::cout<<"The data is collected from 2020.01.17 to "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
     time_ptr=std::localtime(&approaching_seconds);    
     std::cout<<"The infected number will approach the peak after about "<<approaching_days<<" days: "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
     std::cout<<"The predicted number of infected persons in next 3 days are: "<<std::endl;
