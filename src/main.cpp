@@ -35,7 +35,7 @@ int main( int argc, char** argv )
     for(int i=0;i<days;i++)//from 2020.1.17 when number increased rapidly
         x_data.push_back(int(i));
     
-    typedef g2o::BlockSolver<g2o::BlockSolverTraits<-1,-1>> Block;//block solver
+    typedef g2o::BlockSolver<g2o::BlockSolverTraits<Eigen::Dynamic,Eigen::Dynamic>> Block;//block solver
     std::unique_ptr<Block::LinearSolverType> linear_solver(new g2o::LinearSolverDense<Block::PoseMatrixType>());//linear solver
     std::unique_ptr<Block> solver_ptr(new Block(std::move(linear_solver)));
     //GN, LM, DogLeg
