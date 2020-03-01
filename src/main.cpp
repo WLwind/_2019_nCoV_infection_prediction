@@ -12,7 +12,7 @@
 #include <_2019_nCoV_infection_prediction/curve_fitting_edge.h>
 #include <_2019_nCoV_infection_prediction/curve_fitting_vertex.h>
 
-using namespace std; 
+using namespace std;
 
 int main( int argc, char** argv )
 {
@@ -35,11 +35,12 @@ int main( int argc, char** argv )
     for(int i=0;i<days;i++)//from 2020.1.17 when number increased rapidly
         x_data.push_back(int(i));
     
+    //build optimizer
     typedef g2o::BlockSolver<g2o::BlockSolverTraits<Eigen::Dynamic,Eigen::Dynamic>> Block;//block solver
-    std::unique_ptr<Block::LinearSolverType> linear_solver(new g2o::LinearSolverDense<Block::PoseMatrixType>());//linear solver
-    std::unique_ptr<Block> solver_ptr(new Block(std::move(linear_solver)));
-    //GN, LM, DogLeg
-    g2o::OptimizationAlgorithm* solver(new g2o::OptimizationAlgorithmLevenberg(std::move(solver_ptr)));//solver
+    typedef g2o::LinearSolverDense<Block::PoseMatrixType> LinearSolver;
+    auto get_linear_solver=[](){return std::unique_ptr<Block::LinearSolverType>(new LinearSolver());};//linear solver
+    auto get_block_solver=[&get_linear_solver](){return std::unique_ptr<Block>(new Block(get_linear_solver()));};//block solver: GN, LM, DogLeg
+    g2o::OptimizationAlgorithm* solver(new g2o::OptimizationAlgorithmLevenberg(get_block_solver()));//solver
     g2o::SparseOptimizer optimizer;//optimizer
     optimizer.setAlgorithm(solver);
     optimizer.setVerbose(true);//print process
