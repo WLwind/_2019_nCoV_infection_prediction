@@ -16,13 +16,13 @@ using namespace std;
 
 int main( int argc, char** argv )
 {
-    double nig[3] = {50000.0,58.0,0.02123106};//parameters
+    double nig[3] = {100000.0,580.0,0.2};//parameters
     vector<double> y_data;
     double load_data;
-    std::ifstream ifs("../infected_numbers.txt");
+    std::ifstream ifs("../infected_numbers2.txt");
     if(!ifs.is_open())
     {
-        ifs.open("infected_numbers.txt");
+        ifs.open("infected_numbers2.txt");
         assert(ifs.is_open());
     }
     std::cout<<"Loading data"<<std::endl;
@@ -72,18 +72,18 @@ int main( int argc, char** argv )
     
     auto nig_estimate = v->estimate();
     std::cout<<"estimated formular: y="<<nig_estimate[0]<<"*"<<nig_estimate[1]<<"/("<<nig_estimate[1]<<"+("<<nig_estimate[0]<<"-"<<nig_estimate[1]<<")e^(-"<<nig_estimate[2]<<"x))"<<std::endl;
-    std::cout<<"The estimated peak number is "<<int(nig_estimate[0])<<", which is "<<nig_estimate[0]/5237.0<<" times the number of SARS."<<std::endl;
+    std::cout<<"The estimated peak number in China is "<<int(nig_estimate[0])<<", which is "<<nig_estimate[0]/5237.0<<" times the number of SARS."<<std::endl;
     time_t now_seconds{std::time(0)},approaching_seconds{std::time(0)};
     std::tm first_date{0,0,0,17,0,2020-1900,5,16,0};//2020.1.17
     approaching_seconds=now_seconds=mktime(&first_date);
     int approaching_days{0};
-    for(;nig_estimate[0]*nig_estimate[1]/(nig_estimate[1]+(nig_estimate[0]-nig_estimate[1])*exp(-nig_estimate[2]*(days+approaching_days)))<0.99*nig_estimate[0];approaching_days++){}//99% of the peak number
+    for(;nig_estimate[0]*nig_estimate[1]/(nig_estimate[1]+(nig_estimate[0]-nig_estimate[1])*exp(-nig_estimate[2]*(days+approaching_days)))<0.999*nig_estimate[0];approaching_days++){}//99.9% of the peak number
     approaching_seconds+=(days+approaching_days)*86400;
     now_seconds+=(days-1)*86400;//last data collected day
     std::tm* time_ptr=std::localtime(&now_seconds);
     std::cout<<"The data is collected from 2020.01.17 to "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
     time_ptr=std::localtime(&approaching_seconds);    
-    std::cout<<"The infected number will approach the peak after about "<<approaching_days<<" days: "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
+    std::cout<<"The infected number will reach 99.9% of the peak after about "<<approaching_days<<" days: "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
     std::cout<<"The predicted number of infected persons in next 3 days are: "<<std::endl;
     for(int i=0;i<3;i++)
     {
