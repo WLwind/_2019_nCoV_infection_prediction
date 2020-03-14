@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ctime>
 #include <_2019_nCoV_infection_prediction/curve_fitting_cost.h>
+#include <_2019_nCoV_infection_prediction/display_figure.h>
 
 using namespace std;
 
@@ -57,7 +58,7 @@ int main ( int argc, char* argv[] )
     std::tm first_date{0,0,0,17,0,2020-1900,5,16,0};//2020.1.17
     approaching_seconds=now_seconds=mktime(&first_date);
     int approaching_days{0};
-    for(;nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*exp(-nig[2]*(days+approaching_days)))<0.999*nig[0];approaching_days++){}//99% of the peak number
+    for(;nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*exp(-nig[2]*(days+approaching_days)))<0.999*nig[0];approaching_days++){}//99.9% of the peak number
     approaching_seconds+=(days+approaching_days)*86400;
     now_seconds+=(days-1)*86400;//last data collected day
     std::tm* time_ptr=std::localtime(&now_seconds);
@@ -71,6 +72,8 @@ int main ( int argc, char* argv[] )
         time_ptr=std::localtime(&now_seconds);
         std::cout<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<": "<<int(nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*exp(-nig[2]*(days+i)))+0.5)<<std::endl;
     }
+    DisplayFig pic(nig,y_data);
+    pic.display();
     return 0;
 }
 

@@ -6,7 +6,10 @@ I'm trying to use Susceptible-Infective Model to predict the number. This branch
 ## Dependencies
 Ceres Solver  
 For Ubuntu users, you can simply install it from apt:  
-$ sudo apt install libceres-dev
+$ sudo apt install libceres-dev  
+OpenCV  
+I have tested it with OpenCV 3.2.0:  
+$ sudo apt install libopencv-dev  
 ## Installation
 $ cd _2019_nConV_infection_prediction  
 $ git checkout ceres  
