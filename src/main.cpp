@@ -11,6 +11,7 @@
 #include <g2o/solvers/dense/linear_solver_dense.h>
 #include <_2019_nCoV_infection_prediction/curve_fitting_edge.h>
 #include <_2019_nCoV_infection_prediction/curve_fitting_vertex.h>
+#include <_2019_nCoV_infection_prediction/display_figure.h>
 
 using namespace std;
 
@@ -91,5 +92,9 @@ int main( int argc, char** argv )
         time_ptr=std::localtime(&now_seconds);
         std::cout<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<": "<<int(nig_estimate[0]*nig_estimate[1]/(nig_estimate[1]+(nig_estimate[0]-nig_estimate[1])*exp(-nig_estimate[2]*(days+i)))+0.5)<<std::endl;
     }
+    for(int i=0;i<3;i++)
+        nig[i]=nig_estimate[i];
+    DisplayFig pic(nig,y_data);
+    pic.display();
     return 0;
 }
