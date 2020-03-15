@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <ctime>
+#include <sstream>
 #include <Eigen/Core>
 #include <g2o/core/block_solver.h>
 #include <g2o/core/optimization_algorithm_levenberg.h>
@@ -55,12 +56,12 @@ int main( int argc, char** argv )
     //add edges
     for ( int i=0; i<days; i++ )
     {
-        CurveFittingEdge* edge = new CurveFittingEdge( x_data[i] );
-        edge->setId(i);
+	    CurveFittingEdge* edge = new CurveFittingEdge( x_data[i] );
+	    edge->setId(i);
         edge->setVertex( 0, v );
         edge->setMeasurement( y_data[i] );
         edge->setInformation(Eigen::Matrix<double,1,1>::Identity());
-        optimizer.addEdge(edge);
+	optimizer.addEdge(edge);
     }
     
     cout<<"start optimization"<<endl;
@@ -83,6 +84,9 @@ int main( int argc, char** argv )
     now_seconds+=(days-1)*86400;//last data collected day
     std::tm* time_ptr=std::localtime(&now_seconds);
     std::cout<<"The data is collected from 2020.01.17 to "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
+    std::stringstream ss_last_date;
+    ss_last_date<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday;
+    std::string s_last_date(ss_last_date.str());//for display
     time_ptr=std::localtime(&approaching_seconds);    
     std::cout<<"The infected number will reach 99.9% of the peak after about "<<approaching_days<<" days: "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
     std::cout<<"The predicted number of infected persons in next 3 days are: "<<std::endl;
@@ -94,7 +98,7 @@ int main( int argc, char** argv )
     }
     for(int i=0;i<3;i++)
         nig[i]=nig_estimate[i];
-    DisplayFig pic(nig,y_data);
+    DisplayFig pic(nig,y_data,s_last_date);
     pic.display();
     return 0;
 }
