@@ -3,6 +3,7 @@
 #include <cmath>
 #include <fstream>
 #include <ctime>
+#include <sstream>
 #include <_2019_nCoV_infection_prediction/curve_fitting_cost.h>
 #include <_2019_nCoV_infection_prediction/display_figure.h>
 
@@ -63,6 +64,9 @@ int main ( int argc, char* argv[] )
     now_seconds+=(days-1)*86400;//last data collected day
     std::tm* time_ptr=std::localtime(&now_seconds);
     std::cout<<"The data is collected from 2020.01.17 to "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
+    std::stringstream ss_last_date;
+    ss_last_date<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday;
+    std::string s_last_date(ss_last_date.str());//for display
     time_ptr=std::localtime(&approaching_seconds);
     std::cout<<"The infected number will reach 99.9% of the peak after about "<<approaching_days<<" days: "<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<std::endl;
     std::cout<<"The predicted number of infected persons in next 3 days are: "<<std::endl;
@@ -72,7 +76,7 @@ int main ( int argc, char* argv[] )
         time_ptr=std::localtime(&now_seconds);
         std::cout<<1900+time_ptr->tm_year<<"."<<1+time_ptr->tm_mon<<"."<<time_ptr->tm_mday<<": "<<int(nig[0]*nig[1]/(nig[1]+(nig[0]-nig[1])*exp(-nig[2]*(days+i)))+0.5)<<std::endl;
     }
-    DisplayFig pic(nig,y_data);
+    DisplayFig pic(nig,y_data,s_last_date);
     pic.display();
     return 0;
 }

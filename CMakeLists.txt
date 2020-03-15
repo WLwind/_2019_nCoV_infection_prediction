@@ -12,11 +12,16 @@ find_package( Ceres REQUIRED )
 find_package(OpenCV REQUIRED)
 message(STATUS "Include directories of OpenCV: ${OpenCV_INCLUDE_DIRS}")
 
-include_directories(include ${CERES_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(include ${CERES_INCLUDE_DIRS}
+    ${OpenCV_INCLUDE_DIRS}
+)
 aux_source_directory(src DIRS_SRCS)
 
 add_executable(${PROJECT_NAME}
-  ${DIRS_SRCS}
+    ${DIRS_SRCS}
 )
 # link Ceres lib
-target_link_libraries(_2019_nCoV_infection_prediction ${CERES_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}
+    ${CERES_LIBRARIES}
+    ${OpenCV_LIBRARIES}
+)
