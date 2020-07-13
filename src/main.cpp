@@ -29,9 +29,7 @@ int main( int argc, char** argv )
     }
     std::cout<<"Loading data"<<std::endl;
     while(ifs>>load_data)//data source: http://m.medsci.cn/wh.asp
-    {
         y_data.push_back(load_data);
-    }
     int days=y_data.size();
     vector<double> x_data;//data,date
     for(int i=0;i<days;i++)//from 2020.1.17 when number increased rapidly
@@ -54,14 +52,14 @@ int main( int argc, char** argv )
     optimizer.addVertex(v);
     
     //add edges
-    for ( int i=0; i<days; i++ )
+    for(int i=0;i<days;i++)
     {
-	    CurveFittingEdge* edge = new CurveFittingEdge( x_data[i] );
-	    edge->setId(i);
+        CurveFittingEdge* edge = new CurveFittingEdge( x_data[i] );
+        edge->setId(i);
         edge->setVertex( 0, v );
         edge->setMeasurement( y_data[i] );
         edge->setInformation(Eigen::Matrix<double,1,1>::Identity());
-	optimizer.addEdge(edge);
+        optimizer.addEdge(edge);
     }
     
     cout<<"start optimization"<<endl;
