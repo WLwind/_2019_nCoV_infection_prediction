@@ -15,6 +15,6 @@ public:
     {
         _estimate += Eigen::Vector3d(update);
     }
-    virtual bool read( std::istream& in ) {}
-    virtual bool write( std::ostream& out ) const {}
+    virtual bool read(std::istream& in){return true;}
+    virtual bool write(std::ostream& out)const {return out.good();}
 };
