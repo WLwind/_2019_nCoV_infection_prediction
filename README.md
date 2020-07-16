@@ -10,13 +10,13 @@ For ROS Melodic or Noetic users, you can simply install it from apt:
 `$ sudo apt install ros-melodic-libg2o` or  
 `$ sudo apt install ros-noetic-libg2o`  
 OpenCV  
-I have tested it with OpenCV 3.2.0:  
+I have tested it with OpenCV 2.4.9, 3.2.0 and 4.2.0:  
 `$ sudo apt install libopencv-dev`  
 ## Installation
-`$ cd _2019_nConV_infection_prediction`  
+`$ cd _2019_nCoV_infection_prediction`  
 `$ mkdir build`  
 `$ cd build`   
 `$ cmake ..`  
 `$ make`  
 ## Run
-`$ ./_2019_nConV_infection_prediction`  
+`$ ./_2019_nCoV_infection_prediction`  

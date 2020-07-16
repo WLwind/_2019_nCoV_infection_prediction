@@ -4,15 +4,16 @@ project(_2019_nCoV_infection_prediction)
 set( CMAKE_BUILD_TYPE "Release" )
 set( CMAKE_CXX_FLAGS "-std=c++11 -O3" )
 
-set(Eigen_INCLUDE_DIRS "/usr/include/eigen3")
+find_package(Eigen3 REQUIRED)
+message(STATUS "EIGEN3_INCLUDE_DIRS: ${EIGEN3_INCLUDE_DIRS}")
 # add cmake module to find g2o
 list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 
 # find G2O OpenCV
-find_package(G2O REQUIRED )
+find_package(G2O REQUIRED)
 find_package(OpenCV REQUIRED)
 
-set(EXTERNAL_INCLUDE_DIRS ${Eigen_INCLUDE_DIRS} ${G2O_INCLUDE_DIR} ${G2O_INCLUDE_DIR}/.. ${OpenCV_INCLUDE_DIRS})
+set(EXTERNAL_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIRS} ${G2O_INCLUDE_DIR} ${G2O_INCLUDE_DIR}/.. ${OpenCV_INCLUDE_DIRS})
 set(EXTERNAL_LIBS ${G2O_LIBRARIES} ${OpenCV_LIBRARIES})
 
 include_directories(
