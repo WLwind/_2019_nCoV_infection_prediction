@@ -33,6 +33,7 @@ int main ( int argc, char* argv[] )
     ceres::Problem problem;
     for(int i=0;i<days;i++)
     {
+/*
         problem.AddResidualBlock(//add errors
             new ceres::AutoDiffCostFunction<CURVE_FITTING_COST,1,3>(
                 new CURVE_FITTING_COST(x_data[i],y_data[i])
@@ -40,6 +41,8 @@ int main ( int argc, char* argv[] )
             nullptr,//kernal function
             nig//parameters
         );
+*/
+        problem.AddResidualBlock(new CurveFittingCostFunction(x_data[i],y_data[i]),nullptr,nig);//add error with jacobians
     }
 
     ceres::Solver::Options options;
